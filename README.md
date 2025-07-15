@@ -64,3 +64,16 @@ vue-tsc --noEmit
 
 ---
 
+### 注意事项
+
+##### 必须使用 `node 16.x.x` and `pnpm 7.x.x`，否则运行后报错
+
+- SyntaxError: Must be called at the top of a `setup` function (at vue-i18n.js?v=5558168a:364:17)
+
+##### pnpm install 时如果遇到权限问题，可在命令前加 sudo
+
+- EPERM: operation not permitted, chmod '/Users/xinzhiqiang/项目/电信数智/apache-dolphinscheduler-3.1.7-src/dolphinscheduler-ui/node_modules/.pnpm/eslint@8.23.1/node_modules/eslint/bin/eslint.js'
+
+```shell
+sudo pnpm install
+```
