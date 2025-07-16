@@ -17,6 +17,7 @@
 
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import { useUserStore } from '@/store/user/user'
+import { useCommonStore } from '@/store/common/common'
 import qs from 'qs'
 import _ from 'lodash'
 import cookies from 'js-cookie'
@@ -24,6 +25,7 @@ import router from '@/router'
 import utils from '@/utils'
 
 const userStore = useUserStore()
+const commonStore = useCommonStore()
 
 /**
  * @description Log and display errors
@@ -59,11 +61,23 @@ const baseRequestConfig: AxiosRequestConfig = {
 const service = axios.create(baseRequestConfig)
 
 const err = (err: AxiosError): Promise<AxiosError> => {
+  // console.log('🚀 ~ err ~ err:', err)
+  // console.log(
+  //   '🚀 ~ err ~ commonStore:',
+  //   commonStore.fromIframe,
+  //   commonStore.hideMenu
+  // )
+  // console.log('window.location', window.location)
+
   if (err.response?.status === 401 || err.response?.status === 504) {
-    userStore.setSessionId('')
-    userStore.setSecurityConfigType('')
-    userStore.setUserInfo({})
-    router.push({ path: '/login' })
+    if (commonStore.fromIframe) {
+      window.location.href = `${window.location.origin}/dolphinscheduler/third_authentication`
+    } else {
+      userStore.setSessionId('')
+      userStore.setSecurityConfigType('')
+      userStore.setUserInfo({})
+      router.push({ path: '/login' })
+    }
   }
 
   return Promise.reject(err)

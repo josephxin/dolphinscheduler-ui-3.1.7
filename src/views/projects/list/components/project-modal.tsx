@@ -73,6 +73,7 @@ const ProjectModal = defineComponent({
     watch(
       () => props.statusRef,
       () => {
+        // console.log('🚀 ~ setup ~ props.statusRef:', props.statusRef)
         if (props.statusRef === 0) {
           variables.model.projectName = ''
           variables.model.userName = (

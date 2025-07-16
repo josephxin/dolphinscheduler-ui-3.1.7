@@ -35,11 +35,15 @@ import { useI18n } from 'vue-i18n'
 import { useTable } from './use-table'
 import Card from '@/components/card'
 import ProjectModal from './components/project-modal'
+import { useUserStore } from '@/store/user/user'
+import { UserInfoRes } from '@/service/modules/users/types'
 
 const list = defineComponent({
   name: 'list',
   setup() {
     const { t } = useI18n()
+    const userStore = useUserStore()
+
     const { variables, getTableData, createColumns } = useTable()
 
     const requestData = () => {
@@ -103,11 +107,14 @@ const list = defineComponent({
       onConfirmModal,
       onClearSearch,
       handleChangePageSize,
-      trim
+      trim,
+      userStore
     }
   },
   render() {
     const { t, loadingRef } = this
+    // console.log('this.userStore.userInfo', this.userStore.userInfo);
+    
     return (
       <NSpace vertical>
         <Card>
@@ -160,13 +167,16 @@ const list = defineComponent({
             </NSpace>
           </NSpace>
         </Card>
-        <ProjectModal
-          showModalRef={this.showModalRef}
-          statusRef={this.statusRef}
-          row={this.row}
-          onCancelModal={this.onCancelModal}
-          onConfirmModal={this.onConfirmModal}
-        />
+
+        {(this.userStore.userInfo as UserInfoRes).userName && (
+          <ProjectModal
+            showModalRef={this.showModalRef}
+            statusRef={this.statusRef}
+            row={this.row}
+            onCancelModal={this.onCancelModal}
+            onConfirmModal={this.onConfirmModal}
+          />
+        )}
       </NSpace>
     )
   }

@@ -15,13 +15,23 @@
  * limitations under the License.
  */
 
-import { timezoneList } from '@/common/timezone'
+import { defineStore } from 'pinia'
+import type { CommonState } from '@/store/common/types'
 
-// 'Africa/Abidjan' | 'Africa/Accra'
-type Timezone = (typeof timezoneList)[number]
-
-interface timezoneStore {
-  timezone: Timezone
-}
-
-export { timezoneStore, Timezone }
+export const useCommonStore = defineStore({
+  id: 'common',
+  state: (): CommonState => ({
+    fromIframe: false,
+    hideMenu: false
+  }),
+  persist: true,
+  getters: {},
+  actions: {
+    setFromIframe(value: boolean): void {
+      this.fromIframe = value
+    },
+    setHideMenu(value: boolean): void {
+      this.hideMenu = value
+    }
+  }
+})

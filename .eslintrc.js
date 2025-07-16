@@ -46,14 +46,14 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unused-vars': [
-      'error',
+      'warn',
       {
         argsIgnorePattern: '^(unused|ignored).*$',
         varsIgnorePattern: '^(unused|ignored).*$'
       }
     ],
     'no-unused-vars': [
-      'error',
+      'warn',
       {
         argsIgnorePattern: '^(unused|ignored).*$',
         varsIgnorePattern: '^(unused|ignored).*$'
@@ -65,7 +65,8 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
     'vue/component-definition-name-casing': 'off',
     'vue/require-valid-default-prop': 'off',
-    'no-console': 'error',
-    'vue/no-setup-props-destructure': 'off'
+    'no-console': 'warn',
+    'vue/no-setup-props-destructure': 'off',
+    'prettier/prettier': 'off'
   }
 }

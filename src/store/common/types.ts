@@ -15,13 +15,9 @@
  * limitations under the License.
  */
 
-import { timezoneList } from '@/common/timezone'
-
-// 'Africa/Abidjan' | 'Africa/Accra'
-type Timezone = (typeof timezoneList)[number]
-
-interface timezoneStore {
-  timezone: Timezone
+interface CommonState {
+  fromIframe: boolean
+  hideMenu: boolean
 }
 
-export { timezoneStore, Timezone }
+export { CommonState }

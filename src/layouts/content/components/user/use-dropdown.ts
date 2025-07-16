@@ -37,7 +37,8 @@ export function useDropDown() {
   }
 
   const useLogout = () => {
-    logout().then(() => {
+    logout().then((unusedRes: any) => {
+      // console.log('🚀 ~ logout ~ unusedRes:', unusedRes)
       userStore.setSessionId('')
       userStore.setSecurityConfigType('')
       userStore.setUserInfo({})
