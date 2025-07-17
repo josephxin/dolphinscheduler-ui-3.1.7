@@ -63,9 +63,10 @@ const Content = defineComponent({
 
     const getUrlSearch = () => {
       // console.log('route', route)
-      const { fromIframe, hideMenu } = route.query
+      const { fromIframe, hideMenu, authUrl } = route.query
       commonStore.setFromIframe(fromIframe === 'true')
       commonStore.setHideMenu(hideMenu === 'true')
+      commonStore.setAuthUrl(authUrl as string)
       hideMenuRef.value = hideMenu === 'true'
     }
 

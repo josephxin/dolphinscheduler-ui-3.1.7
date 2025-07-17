@@ -65,13 +65,13 @@ const err = (err: AxiosError): Promise<AxiosError> => {
   // console.log(
   //   '🚀 ~ err ~ commonStore:',
   //   commonStore.fromIframe,
-  //   commonStore.hideMenu
+  //   commonStore.hideMenu,
+  //   commonStore.authUrl
   // )
-  // console.log('window.location', window.location)
 
   if (err.response?.status === 401 || err.response?.status === 504) {
-    if (commonStore.fromIframe) {
-      window.location.href = `${window.location.origin}/dolphinscheduler/third_authentication`
+    if (commonStore.fromIframe && commonStore.authUrl) {
+      window.location.href = commonStore.authUrl
     } else {
       userStore.setSessionId('')
       userStore.setSecurityConfigType('')

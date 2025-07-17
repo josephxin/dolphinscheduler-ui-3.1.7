@@ -22,7 +22,8 @@ export const useCommonStore = defineStore({
   id: 'common',
   state: (): CommonState => ({
     fromIframe: false,
-    hideMenu: false
+    hideMenu: false,
+    authUrl: ''
   }),
   persist: true,
   getters: {},
@@ -32,6 +33,9 @@ export const useCommonStore = defineStore({
     },
     setHideMenu(value: boolean): void {
       this.hideMenu = value
+    },
+    setAuthUrl(value: string): void {
+      this.authUrl = value
     }
   }
 })
