@@ -49,5 +49,9 @@ export default defineConfig({
         changeOrigin: true
       }
     }
+  },
+  build: {
+    // 打包输出目录，默认为 dist
+    outDir: 'ui'
   }
 })

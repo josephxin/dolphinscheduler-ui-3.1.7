@@ -20,22 +20,27 @@ import type { CommonState } from '@/store/common/types'
 
 export const useCommonStore = defineStore({
   id: 'common',
-  state: (): CommonState => ({
-    fromIframe: false,
-    hideMenu: false,
-    authUrl: ''
-  }),
-  persist: true,
+  state: (): CommonState => {
+    const fromIframe = sessionStorage.getItem('fromIframe') === 'true'
+    const hideMenu = sessionStorage.getItem('hideMenu') === 'true'
+    console.log('useCommonStore ~ hideMenu:', hideMenu)
+
+    return {
+      fromIframe: fromIframe,
+      hideMenu: hideMenu
+    }
+  },
+  // 启用持久化
+  // persist: true,
   getters: {},
   actions: {
     setFromIframe(value: boolean): void {
       this.fromIframe = value
+      sessionStorage.setItem('fromIframe', String(value))
     },
     setHideMenu(value: boolean): void {
       this.hideMenu = value
-    },
-    setAuthUrl(value: string): void {
-      this.authUrl = value
+      sessionStorage.setItem('hideMenu', String(value))
     }
   }
 })

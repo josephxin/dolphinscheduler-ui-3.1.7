@@ -27,6 +27,7 @@ declare module '*.vue' {
 declare global {
   interface Window {
     $message: any
+    __TOKEN__: string
   }
 }
 

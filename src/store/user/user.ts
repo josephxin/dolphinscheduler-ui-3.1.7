@@ -20,12 +20,14 @@ import type { UserState } from '@/store/user/types'
 import type { UserInfoRes } from '@/service/modules/users/types'
 
 export const useUserStore = defineStore({
+  // id 用于 localStorage 的key，刷新后state会自动从 localStorage 中取值
   id: 'user',
   state: (): UserState => ({
     sessionId: '',
     securityConfigType: '',
     userInfo: {}
   }),
+  // 启用持久化
   persist: true,
   getters: {
     getSessionId(): string {

@@ -49,7 +49,7 @@ const Content = defineComponent({
     } = useDataList()
 
     const sideKeyRef = ref()
-    const hideMenuRef = ref(false)
+    const hideMenuRef = ref(commonStore.hideMenu)
 
     onMounted(() => {
       locale.value = localesStore.getLocales
@@ -62,17 +62,24 @@ const Content = defineComponent({
     })
 
     const getUrlSearch = () => {
-      // console.log('route', route)
-      const { fromIframe, hideMenu, authUrl } = route.query
-      commonStore.setFromIframe(fromIframe === 'true')
-      commonStore.setHideMenu(hideMenu === 'true')
-      commonStore.setAuthUrl(authUrl as string)
-      hideMenuRef.value = hideMenu === 'true'
+      console.log('route', route)
+      let fromIframe: any = route.query.fromIframe
+      fromIframe = fromIframe  === 'true'
+      let hideMenu: any = route.query.hideMenu
+      hideMenu = hideMenu  === 'true'
+
+      if (fromIframe) {
+        commonStore.setFromIframe(fromIframe)
+      }
+      if (hideMenu) {
+        commonStore.setHideMenu(hideMenu)
+        hideMenuRef.value = hideMenu
+      }
     }
 
     const fetchUserInfo = async () => {
       const userInfo = userStore.userInfo as UserInfoRes
-      // console.log('fetchUserInfo -> userInfo', userInfo)
+      console.log('fetchUserInfo -> userInfo', userInfo)
       if (!userInfo?.userName) {
         const userInfoRes: UserInfoRes = await getUserInfo()
         await userStore.setUserInfo(userInfoRes)

@@ -30,6 +30,7 @@ import trim from './utils/trim'
 const app = createApp(App)
 const pinia = createPinia()
 
+// 持久化插件，如果store中配置了 persist: true，则store中的数据会自动保存到localStorage中
 pinia.use(piniaPluginPersistedstate)
 
 app.config.globalProperties.echarts = echarts

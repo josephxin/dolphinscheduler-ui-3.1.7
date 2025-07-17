@@ -46,6 +46,9 @@ const baseRequestConfig: AxiosRequestConfig = {
       ? '/dolphinscheduler'
       : import.meta.env.VITE_APP_PROD_WEB_URL + '/dolphinscheduler',
   timeout: 15000,
+  headers: {
+    token: window.__TOKEN__ || ''
+  },
   transformRequest: (params) => {
     if (_.isPlainObject(params)) {
       return qs.stringify(params, { arrayFormat: 'repeat' })
@@ -62,22 +65,13 @@ const service = axios.create(baseRequestConfig)
 
 const err = (err: AxiosError): Promise<AxiosError> => {
   // console.log('🚀 ~ err ~ err:', err)
-  // console.log(
-  //   '🚀 ~ err ~ commonStore:',
-  //   commonStore.fromIframe,
-  //   commonStore.hideMenu,
-  //   commonStore.authUrl
-  // )
+  console.log('🚀 ~ err ~ commonStore:', commonStore.hideMenu)
 
   if (err.response?.status === 401 || err.response?.status === 504) {
-    if (commonStore.fromIframe && commonStore.authUrl) {
-      window.location.href = commonStore.authUrl
-    } else {
-      userStore.setSessionId('')
-      userStore.setSecurityConfigType('')
-      userStore.setUserInfo({})
-      router.push({ path: '/login' })
-    }
+    userStore.setSessionId('')
+    userStore.setSecurityConfigType('')
+    userStore.setUserInfo({})
+    router.push({ path: '/login' })
   }
 
   return Promise.reject(err)
