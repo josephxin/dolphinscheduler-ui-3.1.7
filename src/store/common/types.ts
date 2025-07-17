@@ -18,6 +18,7 @@
 interface CommonState {
   fromIframe: boolean
   hideMenu: boolean
+  token: string
 }
 
 export { CommonState }

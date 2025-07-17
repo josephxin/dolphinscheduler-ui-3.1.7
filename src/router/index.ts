@@ -23,6 +23,7 @@ import {
 } from 'vue-router'
 import routes from './routes'
 import { useUserStore } from '@/store/user/user'
+import { useCommonStore } from '@/store/common/common'
 import type { UserInfoRes } from '@/service/modules/users/types'
 
 // NProgress
@@ -53,8 +54,29 @@ router.beforeEach(
     next: NavigationGuardNext
   ) => {
     NProgress.start()
+
+    const commonStore = useCommonStore()
+    // console.log('router.beforeEach ~ to:', to)
+    let fromIframe: any = to.query.fromIframe
+    fromIframe = fromIframe === 'true'
+    let hideMenu: any = to.query.hideMenu
+    hideMenu = hideMenu === 'true'
+    const token: any = to.query.token
+    // console.log('🚀 ~ router.beforeEach ~ token:', token)
+
+    if (fromIframe) {
+      commonStore.setFromIframe(fromIframe)
+    }
+    if (hideMenu) {
+      commonStore.setHideMenu(hideMenu)
+    }
+    if (token) {
+      commonStore.setToken(token)
+    }
+
     const userStore = useUserStore()
     const metaData: metaData = to.meta
+
     if (
       metaData.auth?.includes('ADMIN_USER') &&
       (userStore.getUserInfo as UserInfoRes).userType !== 'ADMIN_USER' &&

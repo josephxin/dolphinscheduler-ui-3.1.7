@@ -26,6 +26,7 @@ import utils from '@/utils'
 
 const userStore = useUserStore()
 const commonStore = useCommonStore()
+// console.log('🚀 ~ commonStore.token:', commonStore.token)
 
 /**
  * @description Log and display errors
@@ -46,9 +47,9 @@ const baseRequestConfig: AxiosRequestConfig = {
       ? '/dolphinscheduler'
       : import.meta.env.VITE_APP_PROD_WEB_URL + '/dolphinscheduler',
   timeout: 15000,
-  headers: {
-    token: window.__TOKEN__ || ''
-  },
+  // headers: {
+  //   token: commonStore.token || ''
+  // },
   transformRequest: (params) => {
     if (_.isPlainObject(params)) {
       return qs.stringify(params, { arrayFormat: 'repeat' })
@@ -65,7 +66,7 @@ const service = axios.create(baseRequestConfig)
 
 const err = (err: AxiosError): Promise<AxiosError> => {
   // console.log('🚀 ~ err ~ err:', err)
-  console.log('🚀 ~ err ~ commonStore:', commonStore.hideMenu)
+  // console.log('🚀 ~ err ~ commonStore.token:', commonStore.token)
 
   if (err.response?.status === 401 || err.response?.status === 504) {
     userStore.setSessionId('')
@@ -78,7 +79,15 @@ const err = (err: AxiosError): Promise<AxiosError> => {
 }
 
 service.interceptors.request.use((config: AxiosRequestConfig<any>) => {
-  config.headers && (config.headers.sessionId = userStore.getSessionId)
+  if (config.headers) {
+    config.headers.sessionId = userStore.getSessionId
+    // console.log(
+    //   'service.interceptors.request ~ commonStore.token:',
+    //   commonStore.token
+    // )
+    config.headers.token = commonStore.token || ''
+  }
+
   const language = cookies.get('language')
   config.headers = config.headers || {}
   if (language) config.headers.language = language

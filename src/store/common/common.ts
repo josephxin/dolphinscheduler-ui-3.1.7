@@ -23,11 +23,14 @@ export const useCommonStore = defineStore({
   state: (): CommonState => {
     const fromIframe = sessionStorage.getItem('fromIframe') === 'true'
     const hideMenu = sessionStorage.getItem('hideMenu') === 'true'
-    console.log('useCommonStore ~ hideMenu:', hideMenu)
+    // console.log('useCommonStore ~ hideMenu:', hideMenu)
+    const token = sessionStorage.getItem('token') || ''
+    // console.log('useCommonStore ~ token:', token)
 
     return {
       fromIframe: fromIframe,
-      hideMenu: hideMenu
+      hideMenu: hideMenu,
+      token: token
     }
   },
   // 启用持久化
@@ -41,6 +44,10 @@ export const useCommonStore = defineStore({
     setHideMenu(value: boolean): void {
       this.hideMenu = value
       sessionStorage.setItem('hideMenu', String(value))
+    },
+    setToken(value: string): void {
+      this.token = value
+      sessionStorage.setItem('token', value)
     }
   }
 })
