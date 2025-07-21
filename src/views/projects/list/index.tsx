@@ -114,7 +114,7 @@ const list = defineComponent({
   render() {
     const { t, loadingRef } = this
     // console.log('this.userStore.userInfo', this.userStore.userInfo);
-    
+
     return (
       <NSpace vertical>
         <Card>
@@ -144,6 +144,7 @@ const list = defineComponent({
             </NSpace>
           </NSpace>
         </Card>
+
         <Card title={t('project.list.project_list')}>
           <NSpace vertical>
             <NDataTable

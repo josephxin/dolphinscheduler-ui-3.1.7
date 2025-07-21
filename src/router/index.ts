@@ -44,6 +44,8 @@ interface metaData {
   auth?: Array<string>
 }
 
+let initialState = true
+
 /**
  * Routing to intercept
  */
@@ -61,16 +63,13 @@ router.beforeEach(
     fromIframe = fromIframe === 'true'
     let hideMenu: any = to.query.hideMenu
     hideMenu = hideMenu === 'true'
-    const token: any = to.query.token
+    const token: any = to.query.token || ''
     // console.log('🚀 ~ router.beforeEach ~ token:', token)
 
-    if (fromIframe) {
+    if (initialState) {
+      initialState = false
       commonStore.setFromIframe(fromIframe)
-    }
-    if (hideMenu) {
       commonStore.setHideMenu(hideMenu)
-    }
-    if (token) {
       commonStore.setToken(token)
     }
 

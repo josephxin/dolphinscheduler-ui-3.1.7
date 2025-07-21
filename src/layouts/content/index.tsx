@@ -16,7 +16,17 @@
  */
 
 import { defineComponent, onMounted, watch, toRefs, ref } from 'vue'
-import { NLayout, NLayoutContent, NLayoutHeader, useMessage } from 'naive-ui'
+import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import {
+  NButton,
+  NIcon,
+  NLayout,
+  NLayoutContent,
+  NLayoutHeader,
+  useMessage
+} from 'naive-ui'
+import { ArrowLeftOutlined } from '@vicons/antd'
 import NavBar from './components/navbar'
 import SideBar from './components/sidebar'
 import { useDataList } from './use-dataList'
@@ -24,8 +34,6 @@ import { useLocalesStore } from '@/store/locales/locales'
 import { useRouteStore } from '@/store/route/route'
 import { useUserStore } from '@/store/user/user'
 import { useCommonStore } from '@/store/common/common'
-import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
 import { getUserInfo } from '@/service/modules/users'
 import { UserInfoRes } from '@/service/modules/users/types'
 
@@ -34,6 +42,7 @@ const Content = defineComponent({
   setup() {
     window.$message = useMessage()
 
+    const router = useRouter()
     const route = useRoute()
     const { locale } = useI18n()
     const localesStore = useLocalesStore()
@@ -116,17 +125,24 @@ const Content = defineComponent({
       { immediate: true }
     )
 
+    const backToList = () => {
+      router.push({ name: 'projects-list' })
+    }
+
     return {
       // toRefs 是 Vue3 组合式 API 中处理响应式对象解构的重要工具，它使得我们可以安全地解构响应式对象而不丢失响应性
       // 只能用于 reactive 创建的对象，这样模板可以直接使用state中的属性，而不失去响应性
       ...toRefs(state),
       changeMenuOption,
       sideKeyRef,
-      hideMenuRef
+      hideMenuRef,
+      route,
+      backToList
     }
   },
   render() {
     // console.log('this.hideMenuRef', this.hideMenuRef)
+    // console.log('this.route', this.route)
     return (
       <NLayout style='height: 100%'>
         {!this.hideMenuRef && (
@@ -152,6 +168,7 @@ const Content = defineComponent({
               sideKey={this.sideKeyRef}
             />
           )}
+
           <NLayoutContent
             native-scrollbar={false}
             style='padding: 16px 22px'
@@ -159,6 +176,19 @@ const Content = defineComponent({
           >
             <router-view key={this.$route.fullPath} />
           </NLayoutContent>
+
+          {this.route.path.startsWith('/projects') &&
+            this.route.path !== '/projects/list' && (
+              <NButton
+                type='primary'
+                style='position: fixed; z-index: 1; bottom: 16px; left: 16px'
+                onClick={this.backToList}
+              >
+                <NIcon>
+                  <ArrowLeftOutlined />
+                </NIcon>
+              </NButton>
+            )}
         </NLayout>
       </NLayout>
     )

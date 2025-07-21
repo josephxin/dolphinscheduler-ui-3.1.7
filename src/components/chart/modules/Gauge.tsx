@@ -70,13 +70,16 @@ const GaugeChart = defineComponent({
             }
           },
           axisLabel: {
-            color: 'auto',
             distance: 40,
-            fontSize: 20
+            // 默认12
+            fontSize: 12,
+            color: 'auto'
           },
           detail: {
             valueAnimation: true,
             formatter: '{value} %',
+            // 默认30
+            fontSize: 30,
             color: 'auto'
           },
           data: [
@@ -84,6 +87,53 @@ const GaugeChart = defineComponent({
               value: props.data
             }
           ]
+        }
+      ],
+      media: [
+        {
+          query: { minWidth: 10 },
+          option: {
+            series: [
+              {
+                detail: {
+                  fontSize: 12
+                },
+                axisLabel: {
+                  fontSize: 6
+                }
+              }
+            ]
+          }
+        },
+        {
+          query: { minWidth: 220 },
+          option: {
+            series: [
+              {
+                detail: {
+                  fontSize: 20
+                },
+                axisLabel: {
+                  fontSize: 10
+                }
+              }
+            ]
+          }
+        },
+        {
+          query: { minWidth: 350 },
+          option: {
+            series: [
+              {
+                detail: {
+                  fontSize: 30
+                },
+                axisLabel: {
+                  fontSize: 20
+                }
+              }
+            ]
+          }
         }
       ]
     }

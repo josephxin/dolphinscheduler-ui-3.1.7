@@ -102,6 +102,7 @@ const workflowMonitor = defineComponent({
             />
           </NGi>
         </NGrid>
+
         <NGrid cols={1} style='margin-top: 12px;'>
           <NGi>
             <DefinitionCard title={t('home.process_definition_statistics')} />

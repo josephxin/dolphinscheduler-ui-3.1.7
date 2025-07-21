@@ -67,6 +67,7 @@ module.exports = {
     'vue/require-valid-default-prop': 'off',
     'no-console': 'warn',
     'vue/no-setup-props-destructure': 'off',
-    'prettier/prettier': 'off'
+    'prettier/prettier': 'off',
+    'prefer-const': 'warn'
   }
 }

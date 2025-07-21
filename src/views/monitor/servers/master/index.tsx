@@ -98,6 +98,7 @@ const master = defineComponent({
                     </NSpace>
                   </NSpace>
                 </NCard>
+
                 <NGrid x-gap='12' cols='4'>
                   <NGi>
                     <Card title={t('monitor.master.cpu_usage')}>
@@ -156,6 +157,7 @@ const master = defineComponent({
             )
           })}
         </NSpace>
+
         <MasterModal
           showModal={showModalRef}
           data={zkDirectoryRef}
